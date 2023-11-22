@@ -126,12 +126,27 @@ public class MatchRatingApproachEncoder implements StringEncoder {
         // Preprocessing
         name = cleanName(name);
 
+        // Bulletproof if name becomes empty after cleanName(name)
+        if (EMPTY.equalsIgnoreCase(name) || SPACE.equalsIgnoreCase(name) || name.length() == 0) {
+            return EMPTY;
+        }
+
         // BEGIN: Actual encoding part of the algorithm...
         // 1. Delete all vowels unless the vowel begins the word
         name = removeVowels(name);
 
+        // Bulletproof if name becomes empty after removeVowels(name)
+        if (EMPTY.equalsIgnoreCase(name) || SPACE.equalsIgnoreCase(name) || name.length() == 0) {
+            return EMPTY;
+        }
+
         // 2. Remove second consonant from any double consonant
         name = removeDoubleConsonants(name);
+
+        // Bulletproof if name becomes empty after removeDoubleConsonants(name)
+        if (EMPTY.equalsIgnoreCase(name) || SPACE.equalsIgnoreCase(name) || name.length() == 0) {
+            return EMPTY;
+        }
 
         // 3. Reduce codex to 6 letters by joining the first 3 and last 3 letters
         name = getFirst3Last3(name);
